@@ -1,0 +1,21 @@
+Redirections and pipes
+
+    0 stdin/input, 1 stdout/output, 2 stderr/error output
+    > file – redirection, create new file or truncate it to zero size
+    >> file – append new data at the end of file
+    command1<<<command2 – ouput from 2nd to stdin of 1st
+    command < file – read stdin from file
+    tee file – read stdin, writes to file and to stdout
+    command 2> file – redirect error messages to file
+    exec 1> >(tee -a log.txt) – redirect stdout also to file
+    2>&1 – merge stderr and stdout
+    exec 3<>/dev/tcp/addr/port – create descriptor for network read/write
+    exec 3>&- – close descriptor
+    command > /dev/null 2>&1 – suppress all output
+    n> n>> n>&m – operation redirect for descriptors n, m
+    mkfifo name – make a named pipe, it can be written and read as file
+    command1 | command2 – pipe, connection between processes
+    command 2>&1 | … – can be shortened to command |& …
+    ${PIPESTATUS[0]}, ${PIPESTATUS[1]} – retvals before and after pipe
+    read parameters – read input line and separate it into parameters
+
