@@ -1,0 +1,21 @@
+- hosts: webservers
+  remote_user: ansible
+  become: "yes"
+  tasks:
+  - name: Install nginx
+    apt:
+      name:
+      - nginx
+      state: latest
+  - name: unpack tar
+    unarchive:
+      src: /shared/e-shop-client.tar.gz
+      dest: /var/www/html
+  - name: copy web root variable file
+    copy:
+      src: /shared/variables.yml
+      dest: /etc/nginx/
+  - template:
+      src: /shared/default.j2
+      dest: /etc/nginx/conf.d/jinja.conf
+
