@@ -1,0 +1,25 @@
+---
+- name: Install nginx and add content + conf.
+  hosts: webservers
+  remote_user: ansible
+  become: "yes"
+  vars_files:
+    - variables.yml
+  tasks:
+    - name: Install nginx
+      apt:
+        name:
+          - nginx
+        state: latest
+    - name: unpack tar
+      unarchive:
+        src: /shared/e-shop-client.tar.gz
+        dest: /var/www/html
+    - name: Template based conf
+      template:
+        src: /shared/default.j2
+        dest: /etc/nginx/conf.d/jinja.conf
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
